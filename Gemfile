@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'sprockets', '~> 2.11.0'
-gem 'spree', github: 'spree/spree', branch: '2-4-stable'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '2-4-stable'
+gem 'solidus', github: 'solidusio/solidus', branch: 'master'
+gem 'solidus_auth_devise', github: 'solidusio/solidus_auth_devise', branch: 'master'
 gem 'sqlite3'
 gem 'pg'
 
