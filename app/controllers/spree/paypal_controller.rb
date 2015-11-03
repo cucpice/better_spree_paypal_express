@@ -1,5 +1,7 @@
 module Spree
   class PaypalController < StoreController
+    before_action :clear_valid_credit_card_payments, only: [ :confirm ]
+
     def express
       order = current_order || raise(ActiveRecord::RecordNotFound)
       items = order.line_items.map(&method(:line_item))
@@ -173,6 +175,12 @@ module Spree
 
     def address_required?
       payment_method.preferred_solution.eql?('Sole')
+    end
+
+    def clear_valid_credit_card_payments
+      current_order.payments.valid.each do |payment|
+        payment.invalidate! if payment.source_type == 'Spree::CreditCard'
+      end
     end
   end
 end
