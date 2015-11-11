@@ -19,7 +19,6 @@
           <small><em><%= Spree.t(:original_amount, :scope => 'paypal', :amount => @payment.display_amount) %></em></small><br>
           <% symbol = ::Money.new(1, Spree::Config[:currency]).symbol %>
           <%= symbol %><%= text_field_tag 'refund_amount', @payment.amount %>
-          <% end %>
         </div>
         <%= button Spree.t(:refund, :scope => 'paypal'), 'icon-dollar' %>
       </fieldset>
