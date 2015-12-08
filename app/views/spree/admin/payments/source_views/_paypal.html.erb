@@ -22,7 +22,7 @@
       <dd><%= payment.source.state.titleize %></dd>
 
       <dt><%= Spree.t(:refunded_at, :scope => :paypal) %>:</dt>
-      <dd><%= pretty_time(payment.source.refunded_at) %></dd>
+      <dd><%= pretty_time(payment.source.refunded_at) unless payment.source.refunded_at.nil? %></dd>
 
       <dt><%= Spree.t(:refund_transaction_id, :scope => :paypal) %>:</dt>
       <dd><%= payment.source.refund_transaction_id %></dd>
