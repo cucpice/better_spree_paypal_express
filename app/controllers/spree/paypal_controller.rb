@@ -22,6 +22,8 @@ module Spree
         }
       end
 
+      items << available_store_credit(order)
+
       # Because PayPal doesn't accept $0 items at all.
       # See #10
       # https://cms.paypal.com/uk/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_api_ECCustomizing
@@ -30,7 +32,6 @@ module Spree
         item[:Amount][:value].zero?
       end
       pp_request = provider.build_set_express_checkout(express_checkout_request_details(order, items))
-
       begin
         pp_response = provider.set_express_checkout(pp_request)
         if pp_response.success?
@@ -117,7 +118,7 @@ module Spree
       # This calculates the item sum based upon what is in the order total, but not for shipping
       # or tax.  This is the easiest way to determine what the items should cost, as that
       # functionality doesn't currently exist in Spree core
-      item_sum = current_order.total - shipment_sum - current_order.additional_tax_total
+      item_sum = current_order.order_total_after_store_credit - shipment_sum - current_order.additional_tax_total
 
       if item_sum.zero?
         # Paypal does not support no items or a zero dollar ItemTotal
@@ -132,7 +133,7 @@ module Spree
         {
           :OrderTotal => {
             :currencyID => current_order.currency,
-            :value => current_order.total
+            :value => current_order.order_total_after_store_credit
           },
           :ItemTotal => {
             :currencyID => current_order.currency,
@@ -166,6 +167,19 @@ module Spree
           :StateOrProvince => current_order.bill_address.state_text,
           :Country => current_order.bill_address.country.iso,
           :PostalCode => current_order.bill_address.zipcode
+      }
+    end
+
+    def available_store_credit(order)
+      # return nothing so it responds to the zero? method.
+      return { :Amount => { :value => 0.00 } } if order.total_available_store_credit.to_f == 0.0
+      {
+        :Name => 'Store Credit',
+        :Quantity => 1,
+        :Amount => {
+          :currencyID => order.currency,
+          :value => order.total_available_store_credit * -1
+        }
       }
     end
 
