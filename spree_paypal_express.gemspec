@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'solidus_core', [">= 1.1.0.pre", "< 1.2.2"]
+  s.add_dependency 'solidus_core', [">= 1.1.0.pre", "<= 1.2.2"]
   s.add_dependency 'paypal-sdk-merchant', '1.106.1'
 
   s.add_development_dependency 'capybara', '~> 2.1'
