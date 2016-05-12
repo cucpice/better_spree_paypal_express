@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/spree-contrib/better_spree_paypal_express.svg?branch=2-4-stable)](https://travis-ci.org/spree-contrib/better_spree_paypal_express)
 
+This extension was forked from [DynamoMTL/better_spree_paypal_express](https://github.com/DynamoMTL/better_spree_paypal_express) inorder to make the gem compatible with solidus 1.0.2
+**No tests (except user test on only one project) had been done for this gem yet, use it with your own risk.**
+
 This is a "re-do" of the official [spree_paypal_express][4] extension. The old extension is extremely hard to maintain and complex.
 
 Behind-the-scenes, this extension uses [PayPal's Merchant Ruby SDK](https://github.com/paypal/merchant-sdk-ruby).
